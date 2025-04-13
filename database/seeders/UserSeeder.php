@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\UserType;
 use App\Models\User;
 
 class UserSeeder extends Seeder
@@ -12,11 +13,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create([
-            'user_type_id' => 1,
+            'user_type_id' => UserType::MERCHANT,
         ]);
 
         User::factory(10)->create([
-            'user_type_id' => 2,
+            'user_type_id' => UserType::COMMON,
         ]);
     }
 }
