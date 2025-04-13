@@ -9,4 +9,8 @@ class UserType extends Model
 {
     /** @use HasFactory<\Database\Factories\UserTypeFactory> */
     use HasFactory;
+
+    public function users() {
+        return $this->hasMany(User::class, 'user_type_id');
+    }   
 }

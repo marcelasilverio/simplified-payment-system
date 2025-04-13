@@ -17,7 +17,16 @@ class UserTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => 'common',
+            'is_allowed_to_transfer' => 1,
         ];
+    }
+
+    public function merchant()
+    {
+        return $this->state([
+            'name' => 'merchant',
+            'is_allowed_to_transfer' => 0,
+        ]);
     }
 }
