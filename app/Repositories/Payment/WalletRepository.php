@@ -27,9 +27,9 @@ class WalletRepository extends Repository
 
     private function updateUserWallet(UserModel $user): void
     {
-        $totalBalance = PaymentModel::where('payee_id', $user->id)
+        $totalBalance = (PaymentModel::where('payee_id', $user->id)
             ->sum('value') - PaymentModel::where('payer_id', $user->id)
-            ->sum('value');
+            ->sum('value')) + $user->initial_balance;
 
         $this->model::updateOrCreate(
             ['user_id' => $user->id],

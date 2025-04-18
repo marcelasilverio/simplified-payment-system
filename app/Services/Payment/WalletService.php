@@ -22,6 +22,6 @@ class WalletService extends Service
     {
         $wallet = $this->repository->getWalletByUserId($user);
 
-        return $wallet->balance ?? 0;
+        return $wallet->balance ?? $user->initial_balance;
     }
 }
