@@ -15,20 +15,21 @@ use App\Exceptions\Payment\SameUserPaymentException;
 
 class PaymentService extends Service
 {
-    public function __construct(PaymentServiceValidator $validator) {
-        parent::__construct($validator);
+    public function __construct(PaymentServiceValidator $validator, PaymentRepository $repository) {
+        parent::__construct($validator, $repository);
     }
     
     public function createPayment(int $payerId, int $payeeId, float $value) {
         $payer = UserModel::find($payerId);
         $payee = UserModel::find($payeeId);
-    
-        $this->validator->validateCreation(new PaymentModel([
+
+        $payment = new PaymentModel([
             'payer' => $payer,
             'payee' => $payee,
             'value' => $value
-        ]));
-
-        
+        ]);
+    
+        $this->validator->validateCreation($payment);
+        $this->repository->createPayment($payment);
     }
 }

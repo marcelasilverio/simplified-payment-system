@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use App\Enums\PaymentStatusEnum;
+
 return new class extends Migration
 {
     /**
@@ -15,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('payer_id')->constrained('users')->onDelete('restrict');
             $table->foreignId('payee_id')->constrained('users')->onDelete('restrict');
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(PaymentStatusEnum::PENDING);
             $table->double('value');
             $table->softDeletes();
             $table->timestamps();
