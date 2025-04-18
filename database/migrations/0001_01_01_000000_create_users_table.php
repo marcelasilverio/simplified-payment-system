@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('user_type_id');
-            $table->double('initial_balance')->default(0);
+            $table->float('initial_balance')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -14,7 +14,6 @@ class PaymentController extends Controller
     }
 
     public function post(PaymentRequest $request) {
-        var_dump($request->all());
         $validatedData = $request->validated();
 
         $payerId = $validatedData['payer'];
