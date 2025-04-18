@@ -37,7 +37,7 @@ class PaymentServiceValidator extends Validator
         }
     }
 
-    private function checkIfPayerBalanceIsSufficientForTransaction (UserModel $payer, float $value) 
+    private function checkIfPayerBalanceIsSufficientForTransaction (UserModel $payer, double $value) 
     {
         if ($walletService->getUserBalance($payer) < $value) {
             throw new InsufficientBalanceForPaymentException();

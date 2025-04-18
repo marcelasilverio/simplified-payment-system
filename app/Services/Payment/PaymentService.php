@@ -27,7 +27,7 @@ class PaymentService extends Service
         parent::__construct($validator, $repository);
     }
     
-    public function createPayment(int $payerId, int $payeeId, float $value) {
+    public function createPayment(int $payerId, int $payeeId, double $value) {
         $payer = UserModel::find($payerId);
         $payee = UserModel::find($payeeId);
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Enums;
+
 enum UserTypeEnum: int
 {
     case COMMON = 1;
