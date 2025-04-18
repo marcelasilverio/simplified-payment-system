@@ -18,7 +18,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(PaymentServiceValidator::class, function ($app) {
-            return new PaymentServiceValidator($app->make(PaymentAuthorizationServiceInterface::class));
+            return new PaymentServiceValidator(
+                $app->make(PaymentAuthorizationServiceInterface::class),
+                $app->make(WalletService::class)
+            );
         });
 
         $this->app->singleton(PaymentRepository::class, function ($app) {

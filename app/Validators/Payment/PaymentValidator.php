@@ -14,8 +14,10 @@ use App\Exceptions\Payment\SameUserPaymentException;
 class PaymentServiceValidator extends Validator
 {
     private PaymentAuthorizationServiceInterface $paymentAuthorizationService;
+    private WalletService $walletService;
     
-    public function __construct(PaymentAuthorizationServiceInterface $paymentAuthorizationService) {
+    public function __construct(PaymentAuthorizationServiceInterface $paymentAuthorizationService, WalletService $walletService) {
+        $this->walletService = $walletService;
         $this->paymentAuthorizationService = $paymentAuthorizationService;
 
         parent::__construct();
@@ -23,26 +25,26 @@ class PaymentServiceValidator extends Validator
 
     public function validateCreation(PaymentModel $payment) {
         $this->checkIfUserAllowedToTransferMoney($payer);
-        $this->checkIfPayerBalanceSufficientForTransaction($payer, $value);
+        $this->checkIfPayerBalanceIsSufficientForTransaction($payer, $value);
         $this->checkIfPayerAndPayeeDifferent($payer, $payee);
         $this->checkIfExternalAuthorizationServiceAllow($payer, $payee, $value);
     }
 
-    private function isUserAllowedToTransferMoney (UserModel $user) 
+    private function checkIfUserAllowedToTransferMoney (UserModel $user) 
     {
         if (!$user->canTransferMoney()) {
            throw new PaymentNotAllowedForUserTypeException();
         }
     }
 
-    private function isPayerBalanceSufficientForTransaction (UserModel $payer, float $value) 
+    private function checkIfPayerBalanceIsSufficientForTransaction (UserModel $payer, float $value) 
     {
-        if ($payer->balance < $value) {
+        if ($walletService->getUserBalance($payer) < $value) {
             throw new InsufficientBalanceForPaymentException();
         }
     }
 
-    private function isPayerAndPayeeDifferent (UserModel $payer, UserModel $payee) 
+    private function checkIfPayerAndPayeeDifferent (UserModel $payer, UserModel $payee) 
     {
         if ($payer->id === $payee->id) {
             throw new SameUserPaymentException();
