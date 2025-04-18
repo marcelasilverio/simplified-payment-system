@@ -5,13 +5,16 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
-use ExternalAuthorizationApiService;
-use ExternalNotificationApiService;
+use App\Services\External\ExternalAuthorizationApi\ExternalAuthorizationApiService;
+use App\Services\External\ExternalNotificationApi\ExternalNotificationApiService;
 use App\Interfaces\PaymentAuthorizationServiceInterface;
 use App\Interfaces\NotificationServiceInterface;
 use App\Services\Payment\PaymentService;
 use App\Validators\Payment\PaymentServiceValidator;
 use App\Repositories\Payment\PaymentRepository;
+use App\Repositories\Payment\WalletRepository;
+use App\Services\Payment\WalletService;
+use App\Models\PaymentModel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,8 +28,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(PaymentRepository::class, function ($app) {
-            return new PaymentRepository();
-        });
+            return new PaymentRepository($app->make(PaymentModel::class));
+            });
 
         $this->app->singleton(PaymentService::class, function ($app) {
             return new PaymentService(
@@ -37,9 +40,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(WalletRepository::class, function ($app) {
-            return new WalletRepository();
+            return $app->make(WalletRepository::class);
         });
-   
+            
         $this->app->singleton(WalletService::class, function ($app) {
             return new WalletService($app->make(WalletRepository::class));
         });
@@ -57,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Event::listen(
             PaymentCreatedEvent::class,
+            [UpdateWalletsListener::class, 'handle']
         );
     }
 }

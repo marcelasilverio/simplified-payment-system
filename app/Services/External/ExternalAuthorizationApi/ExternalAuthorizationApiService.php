@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\ExternalApi;
+namespace App\Services\External\ExternalAuthorizationApi;
 
 use Illuminate\Support\Facades\Http;
 use Exception;
