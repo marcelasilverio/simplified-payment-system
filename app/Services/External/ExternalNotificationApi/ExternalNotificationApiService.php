@@ -3,10 +3,11 @@
 namespace App\Services\External\ExternalNotificationApi;
 
 use Illuminate\Support\Facades\Http;
+use App\Interfaces\NotificationServiceInterface;
 
 use App\Exceptions\NotificationErrorException;
 
-class ExternalNotificationApiService
+class ExternalNotificationApiService implements NotificationServiceInterface
 {
  protected string $baseUrl;
 

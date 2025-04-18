@@ -21,6 +21,14 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->bind(NotificationServiceInterface::class, function ($app) {
+            return $app->make(ExternalNotificationApiService::class);
+        });
+
+        $this->app->bind(PaymentAuthorizationServiceInterface::class, function ($app) {
+            return $app->make(ExternalAuthorizationApiService::class);
+        });
+        
         $this->app->singleton(PaymentServiceValidator::class, function ($app) {
             return new PaymentServiceValidator(
                 $app->make(PaymentAuthorizationServiceInterface::class),
@@ -34,8 +42,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(PaymentService::class, function ($app) {
             return new PaymentService(
-                $app->make(PaymentRepository::class),
                 $app->make(PaymentServiceValidator::class),
+                $app->make(PaymentRepository::class),
                 $app->make(NotificationServiceInterface::class)
             );
         });
@@ -46,14 +54,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(WalletService::class, function ($app) {
             return new WalletService($app->make(WalletRepository::class));
-        });
-
-        $this->app->bind(NotificationServiceInterface::class, function ($app) {
-            return $app->make(ExternalNotificationApiService::class);
-        });
-
-        $this->app->bind(PaymentAuthorizationServiceInterface::class, function ($app) {
-            return $app->make(ExternalAuthorizationApiService::class);
         });
     }
 

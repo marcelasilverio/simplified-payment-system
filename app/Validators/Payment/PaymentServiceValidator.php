@@ -7,6 +7,7 @@ use App\Models\UserModel;
 use App\Models\PaymentModel;
 use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\PaymentAuthorizationServiceInterface;
+use App\Services\Payment\WalletService;
 
 use App\Exceptions\Payment\InsufficientBalanceForPaymentException;
 use App\Exceptions\Payment\PaymentNotAllowedForUserTypeException;
@@ -20,11 +21,9 @@ class PaymentServiceValidator extends Validator
 
     private PaymentModel $paymentModel;
     
-    public function __construct(Model $paymentAuthorizationService, WalletService $walletService) {
+    public function __construct(PaymentAuthorizationServiceInterface $paymentAuthorizationService, WalletService $walletService) {
         $this->walletService = $walletService;
         $this->paymentAuthorizationService = $paymentAuthorizationService;
-
-        parent::__construct();
     }
 
 
