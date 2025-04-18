@@ -2,8 +2,10 @@
 
 namespace App\Validators\Payment;  
 
+use App\Validators\Validator;
 use App\Models\UserModel;
-use App\Services\Validator;
+use App\Models\PaymentModel;
+use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\PaymentAuthorizationServiceInterface;
 
 use App\Exceptions\Payment\InsufficientBalanceForPaymentException;
@@ -15,19 +17,32 @@ class PaymentServiceValidator extends Validator
 {
     private PaymentAuthorizationServiceInterface $paymentAuthorizationService;
     private WalletService $walletService;
+
+    private PaymentModel $paymentModel;
     
-    public function __construct(PaymentAuthorizationServiceInterface $paymentAuthorizationService, WalletService $walletService) {
+    public function __construct(Model $paymentAuthorizationService, WalletService $walletService) {
         $this->walletService = $walletService;
         $this->paymentAuthorizationService = $paymentAuthorizationService;
 
         parent::__construct();
     }
 
-    public function validateCreation(PaymentModel $payment) {
-        $this->checkIfUserAllowedToTransferMoney($payer);
-        $this->checkIfPayerBalanceIsSufficientForTransaction($payer, $value);
-        $this->checkIfPayerAndPayeeDifferent($payer, $payee);
-        $this->checkIfExternalAuthorizationServiceAllow($payer, $payee, $value);
+
+    public function validateCreation(Model $payment) {
+        $this->setPaymentModel($payment);
+
+        $this->checkIfUserAllowedToTransferMoney($this->payment->payer);
+        $this->checkIfPayerBalanceIsSufficientForTransaction($this->payment->payer, $this->payment->value);
+        $this->checkIfPayerAndPayeeDifferent($this->payment->payer, $this->payment->payee);
+        $this->checkIfExternalAuthorizationServiceAllow($this->payment->payer, $this->payment->payee, $this->payment->value);
+    }
+
+    private function setPaymentModel(Model $paymentModel) {
+        if (!($paymentModel instanceof PaymentModel)) {
+            throw new \InvalidArgumentException('Invalid payment model provided');
+        }
+
+        $this->paymentModel = $paymentModel;
     }
 
     private function checkIfUserAllowedToTransferMoney (UserModel $user) 

@@ -3,7 +3,7 @@
 namespace App\Validators;
 
 use App\Exceptions\InvalidValidatorModelException;
-use App\Models\Model;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class Validator {
     abstract public function validateCreation(Model $data);
