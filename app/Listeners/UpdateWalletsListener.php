@@ -8,19 +8,15 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class UpdateWalletsListener
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
+    protected WalletService $walletService;
+
+    public function __construct(WalletService $walletService)
     {
-        //
+        $this->walletService = $walletService;
     }
 
-    /**
-     * Handle the event.
-     */
     public function handle(PaymentCreatedEvent $event): void
     {
-        //
+        $this->wallletService->updateUsersWalletByPayment($event->payment);
     }
 }
