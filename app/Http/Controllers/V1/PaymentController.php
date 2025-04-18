@@ -16,12 +16,14 @@ class PaymentController extends Controller
     }
 
     public function post(PaymentRequest $request) {
-        $payer = UserModel::findOrFail($validatedData['payer']);
-        $payee = UserModel::findOrFail($validatedData['payee']);
+        $validatedData = $request->validated();
+
+        $payerId = $validatedData['payer'];
+        $payeeId = $validatedData['payee'];
         $value = $validatedData['value'];
 
         try {
-            $this->paymentBusiness->transfer($payer, $payee, $value);
+            $this->paymentBusiness->transfer($payerId, $payeeId, $value);
             return response()->json(['message' => 'Transaction successful'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);

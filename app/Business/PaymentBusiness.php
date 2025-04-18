@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentBusiness
 {
-    public function transfer(UserModel $payer, UserModel $payee, float $value) {
+    public function transfer(int $payerId, int $payeeId, float $value) {
+        
         $this->isTransferTransactionAllowed($payer, $payee, $value);
 
         DB::transaction(function () use ($payer, $payee, $value) {

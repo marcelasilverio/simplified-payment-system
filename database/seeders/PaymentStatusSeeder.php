@@ -13,8 +13,8 @@ class PaymentStatusSeeder extends Seeder
     {
         $statuses = [
             ['id' => PaymentStatusEnum::PENDING->value, 'name' => PaymentStatusEnum::PENDING->getLabel()],
-            ['id' => PaymentStatusEnum::COMPLETED->value, 'name' => PaymentStatusEnum::COMPLETED->getLabel()],
-            ['id' => PaymentStatusEnum::FAILED->value, 'name' => PaymentStatusEnum::FAILED->getLabel()],
+            ['id' => PaymentStatusEnum::APPROVED->value, 'name' => PaymentStatusEnum::APPROVED->getLabel()],
+            ['id' => PaymentStatusEnum::DENIED->value, 'name' => PaymentStatusEnum::DENIED->getLabel()],
         ];
     }
 }
