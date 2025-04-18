@@ -19,7 +19,7 @@ class PaymentServiceValidator extends Validator
     private PaymentAuthorizationServiceInterface $paymentAuthorizationService;
     private WalletService $walletService;
 
-    private PaymentModel $paymentModel;
+    private PaymentModel $payment;
     
     public function __construct(PaymentAuthorizationServiceInterface $paymentAuthorizationService, WalletService $walletService) {
         $this->walletService = $walletService;
@@ -28,7 +28,7 @@ class PaymentServiceValidator extends Validator
 
 
     public function validateCreation(Model $payment) {
-        $this->setPaymentModel($payment);
+        $this->setPayment($payment);
 
         $this->checkIfUserAllowedToTransferMoney($this->payment->payer);
         $this->checkIfPayerBalanceIsSufficientForTransaction($this->payment->payer, $this->payment->value);
@@ -36,12 +36,12 @@ class PaymentServiceValidator extends Validator
         $this->checkIfExternalAuthorizationServiceAllow($this->payment->payer, $this->payment->payee, $this->payment->value);
     }
 
-    private function setPaymentModel(Model $paymentModel) {
-        if (!($paymentModel instanceof PaymentModel)) {
+    private function setPayment(Model $payment) {
+        if (!($payment instanceof PaymentModel)) {
             throw new \InvalidArgumentException('Invalid payment model provided');
         }
 
-        $this->paymentModel = $paymentModel;
+        $this->payment = $payment;
     }
 
     private function checkIfUserAllowedToTransferMoney (UserModel $user) 

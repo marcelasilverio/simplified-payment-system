@@ -30,12 +30,13 @@ class PaymentService extends Service
     public function createPayment(int $payerId, int $payeeId, float $value) {
         $payer = UserModel::find($payerId);
         $payee = UserModel::find($payeeId);
-
         $payment = new PaymentModel([
-            'payer' => $payer,
-            'payee' => $payee,
+            'payer_id' => $payerId,
+            'payee_id' => $payeeId,
             'value' => $value
         ]);
+        $payment->setRelation('payer', $payer);
+        $payment->setRelation('payee', $payee);
     
         $this->validator->validateCreation($payment);
         $this->repository->createPayment($payment);
