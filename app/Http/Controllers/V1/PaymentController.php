@@ -9,10 +9,8 @@ use App\Models\UserModel;
 
 class PaymentController extends Controller
 {
-    protected PaymentService $paymentService;
-
     public function __construct(PaymentService $paymentService) {
-        $this->paymentService = $paymentService;
+        parent::__construct($paymentService);
     }
 
     public function post(PaymentRequest $request) {
@@ -23,7 +21,7 @@ class PaymentController extends Controller
         $value = $validatedData['value'];
 
         try {
-            $this->paymentService->createPayment($payerId, $payeeId, $value);
+            $this->service->createPayment($payerId, $payeeId, $value);
             return response()->json(['message' => 'Transaction successful'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
