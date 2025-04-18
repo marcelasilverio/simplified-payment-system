@@ -36,6 +36,14 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+        $this->app->singleton(WalletRepository::class, function ($app) {
+            return new WalletRepository();
+        });
+   
+        $this->app->singleton(WalletService::class, function ($app) {
+            return new WalletService($app->make(WalletRepository::class));
+        });
+
         $this->app->bind(NotificationServiceInterface::class, function ($app) {
             return $app->make(ExternalNotificationApiService::class);
         });

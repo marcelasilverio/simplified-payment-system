@@ -7,6 +7,11 @@ use App\Models\PaymentModel;
 
 class PaymentRepository extends Repository 
 {
+    public function __construct(PaymentModel $model) 
+    {
+        parent::__construct($model);
+    }
+
     public function createPayment(PaymentModel $payment): PaymentModel
     {
         return $payment->save();
@@ -14,6 +19,6 @@ class PaymentRepository extends Repository
 
     public function getPaymentById(int $id): ?PaymentModel
     {
-        return PaymentModel::find($id);
+        return $this->model::find($id);
     }
 }

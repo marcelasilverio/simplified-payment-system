@@ -2,6 +2,11 @@
 
 namespace App\Payment\Services;
 
+use App\Models\UserModel;
+use App\Models\PaymentModel;
+use App\Repositories\Payment\WalletRepository;
+use App\Services\Service;
+
 class WalletService extends Service
 {
     public function __construct(WalletRepository $repository) {
@@ -10,20 +15,13 @@ class WalletService extends Service
 
     public function updateUsersWalletByPayment(PaymentModel $payment): void
     {
-        $payerWallet = $this->repository->getWalletByUserId($payment->payer->id);
-        $payeeWallet = $this->repository->getWalletByUserId($payment->payee->id);
-
-        $payerWallet->balance -= $payment->value;
-        $payeeWallet->balance += $payment->value;
-
-        $this->repository->updateWallet($payerWallet);
-        $this->repository->updateWallet($payeeWallet);
+        $this->repository->updateWalletByPayment($payment);
     }
 
     public function getUserBalance(UserModel $user): float
     {
-        $wallet = $this->repository->getWalletByUserId($user->id);
+        $wallet = $this->repository->getWalletByUserId($user);
 
-        return $wallet->balance;
+        return $wallet->balance ?? 0;
     }
 }
