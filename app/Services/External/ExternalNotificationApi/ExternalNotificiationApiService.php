@@ -3,7 +3,8 @@
 namespace App\Services\ExternalApi;
 
 use Illuminate\Support\Facades\Http;
-use Exception;
+
+use App\Exceptions\NotificationErrorException;
 
 class ExternalNotificationApiService
 {
@@ -14,20 +15,16 @@ class ExternalNotificationApiService
      $this->baseUrl = config('services.externalNotificationApi.url');
  }
  
- public function notifyUsers(): bool
+ public function notifyUsers()
  {
      try {
          $response = Http::post($this->baseUrl . '/notify');
 
-         if ($response->status() === 200) {
-             $returnedData = $response->json();
-             return $returnedData['authorized'] === "true";
+         if (!$response->status() === 204) {
+            throw new NotificationErrorException();
          }
-
      } catch (Exception $e) {
-        return false;
+        Log::error('Notification error: ' . $e->getMessage());
      }
-
-     return false;
  }
 }
