@@ -15,6 +15,7 @@ use App\Repositories\Payment\PaymentRepository;
 use App\Repositories\Payment\WalletRepository;
 use App\Services\Payment\WalletService;
 use App\Models\PaymentModel;
+use App\Models\WalletModel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(PaymentRepository::class, function ($app) {
             return new PaymentRepository($app->make(PaymentModel::class));
-            });
+        });
 
         $this->app->singleton(PaymentService::class, function ($app) {
             return new PaymentService(
@@ -40,9 +41,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(WalletRepository::class, function ($app) {
-            return $app->make(WalletRepository::class);
+            return new WalletRepository($app->make(WalletModel::class));
         });
-            
+
         $this->app->singleton(WalletService::class, function ($app) {
             return new WalletService($app->make(WalletRepository::class));
         });
