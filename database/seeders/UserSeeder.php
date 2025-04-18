@@ -14,10 +14,12 @@ class UserSeeder extends Seeder
     {
         UserModel::factory(10)->create([
             'user_type_id' => UserTypeEnum::MERCHANT,
+            'initial_balance' => 1000,
         ]);
 
         UserModel::factory(10)->create([
             'user_type_id' => UserTypeEnum::COMMON,
+            'initial_balance' => 1000,
         ]);
     }
 }

@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'cpf' => fake()->unique()->numerify('###########'),
             'password' => static::$password ??= Hash::make('password'),
             'user_type_id' => $this->faker->randomElement(UserTypeModel::pluck('id')->toArray()),
+            'initial_balance' => $this->faker->randomFloat(2, 0, 10000),
         ];
     }
 }
