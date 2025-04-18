@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PaymentStatusModel extends Model
+class WalletModel extends Model
 {
-    use SoftDeletes;
-
-    public const TABLE = 'payments_statuses';
+    public const TABLE = 'wallets';
     public const ID = 'id';
 
     protected $table = self::TABLE;

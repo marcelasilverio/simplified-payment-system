@@ -11,6 +11,12 @@ class UserTypeModel extends Model
     /** @use HasFactory<\Database\Factories\UserTypeFactory> */
     use HasFactory, SoftDeletes;
 
+    public const TABLE = 'user_types';
+    public const ID = 'id';
+
+    protected $table = self::TABLE;
+    protected $primaryKey = self::ID;
+
     public function users() {
         return $this->hasMany(UserModel::class, 'user_type_id');
     }

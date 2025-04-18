@@ -9,6 +9,12 @@ class PaymentModel extends Model
 {
     use SoftDeletes;
 
+    public const TABLE = 'payments';
+    public const ID = 'id';
+
+    protected $table = self::TABLE;
+    protected $primaryKey = self::ID;
+
     protected $fillable = [
         'payer_id',
         'payee_id',

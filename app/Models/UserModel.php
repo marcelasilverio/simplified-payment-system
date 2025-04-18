@@ -12,6 +12,12 @@ class UserModel extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
 
+    public const TABLE = 'users';
+    public const ID = 'id';
+
+    protected $table = self::TABLE;
+    protected $primaryKey = self::ID;
+
     protected $fillable = [
         'first_name',
         'last_name',
