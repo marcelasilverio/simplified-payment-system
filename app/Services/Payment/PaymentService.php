@@ -24,7 +24,7 @@ class PaymentService extends Service
     public function __construct(PaymentServiceValidator $validator, PaymentRepository $repository, NotificiationServiceInterface $notificationService) {
         $this->notificationService = $notificationService;
 
-        parent::__construct($validator, $repository);
+        parent::__construct($repository, $validator);
     }
     
     public function createPayment(int $payerId, int $payeeId, double $value) {

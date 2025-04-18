@@ -34,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(PaymentService::class, function ($app) {
             return new PaymentService(
-                $app->make(PaymentServiceValidator::class),
                 $app->make(PaymentRepository::class),
+                $app->make(PaymentServiceValidator::class),
                 $app->make(NotificationServiceInterface::class)
             );
         });

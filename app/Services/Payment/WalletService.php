@@ -10,7 +10,7 @@ use App\Services\Service;
 class WalletService extends Service
 {
     public function __construct(WalletRepository $repository) {
-        parent::__construct(null, $repository);
+        parent::__construct($repository, null);
     }
 
     public function updateUsersWalletByPayment(PaymentModel $payment): void
