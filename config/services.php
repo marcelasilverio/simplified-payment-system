@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'externalAuthorizationApi' => [
+        'url' => env('EXTERNAL_AUTHORIZATION_API_URL'),
+    ],
+
+    'externalNotificationApi' => [
+        'url' => env('EXTERNAL_AUTHORIZATION_API_URL'),
+    ],
 ];
