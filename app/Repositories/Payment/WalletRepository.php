@@ -3,6 +3,7 @@
 namespace App\Repositories\Payment;
 
 use App\Repositories\Repository;
+use App\Models\UserModel;
 use App\Models\WalletModel;
 use App\Models\PaymentModel;
 
@@ -20,7 +21,7 @@ class WalletRepository extends Repository
         });
     }
 
-    public function getWalletBalanceByUserId(UserModel $user): ?WalletModel
+    public function getWalletByUserId(UserModel $user): ?WalletModel
     {
         return $this->model::where('user_id', $user->id)->first();
     }

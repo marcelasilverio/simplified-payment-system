@@ -22,7 +22,6 @@ class UserTypeModel extends Model
     }
 
     public function canUserTypeTransferMoney() {
-        var_dump($this->is_allowed_to_transfer);
         return $this->is_allowed_to_transfer;
     }
 }

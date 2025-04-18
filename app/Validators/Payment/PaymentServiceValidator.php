@@ -11,7 +11,7 @@ use App\Services\Payment\WalletService;
 
 use App\Exceptions\Payment\InsufficientBalanceForPaymentException;
 use App\Exceptions\Payment\PaymentNotAllowedForUserTypeException;
-use App\Exceptions\Payment\PaymentAuthorizationServiceExceptionFailed;
+use App\Exceptions\Payment\PaymentAuthorizationServiceFailedException;
 use App\Exceptions\Payment\SameUserPaymentException;
 
 class PaymentServiceValidator extends Validator
@@ -68,7 +68,7 @@ class PaymentServiceValidator extends Validator
     private function checkIfExternalAuthorizationServiceAllow()
     {
         if (!$this->paymentAuthorizationService->isPaymentAuthorized()) {
-            throw new PaymentAuthorizationServiceExceptionFailed();
+            throw new PaymentAuthorizationServiceFailedException();
         }
     }
 }

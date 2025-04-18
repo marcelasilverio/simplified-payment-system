@@ -4,7 +4,7 @@ namespace App\Exceptions\Payment;
 
 use Exception;
 
-class PaymentAuthorizationServiceExceptionFailed extends Exception
+class PaymentAuthorizationServiceFailedException extends Exception
 {
     protected const MESSAGE = "Payment not authorized by the external service.";
     protected const CODE = 400;
