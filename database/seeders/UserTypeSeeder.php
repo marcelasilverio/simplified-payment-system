@@ -5,7 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\UserType;
+use App\Models\UserTypeModel;
+use App\Enum\UserTypeEnum;
 
 class UserTypeSeeder extends Seeder
 {
@@ -14,9 +15,9 @@ class UserTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        UserType::upsert([
-            ['id' => UserType::MERCHANT, 'name' => 'merchant', 'is_allowed_to_transfer' => 0],
-            ['id' => UserType::COMMON, 'name' => 'common', 'is_allowed_to_transfer' => 1],
+        UserTypeModel::upsert([
+            ['id' => UserTypeEnum::MERCHANT, 'name' => UserTypeEnum::MERCHANT->getLabel(), 'is_allowed_to_transfer' => 0],
+            ['id' => UserTypeEnum::COMMON, 'name' => UsetTypeEnum::COMMON->getLabel(), 'is_allowed_to_transfer' => 1],
         ], ['id']);
     }
 }

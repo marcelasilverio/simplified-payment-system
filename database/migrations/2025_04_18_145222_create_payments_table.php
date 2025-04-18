@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_types', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('is_allowed_to_transfer');
+            $table->foreignId('payer_id')->constrained('users')->onDelete('restrict');
+            $table->foreignId('payee_id')->constrained('users')->onDelete('restrict');
+            $table->integer('status')->default(0);
+            $table->double('value');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_types');
+        Schema::dropIfExists('payments');
     }
 };

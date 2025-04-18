@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_types', function (Blueprint $table) {
+        Schema::create('payment_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('is_allowed_to_transfer');
+            $table->string('name')->unique();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_types');
+        Schema::dropIfExists('payment_statuses');
     }
 };

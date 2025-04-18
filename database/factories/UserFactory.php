@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-use App\Models\UserType;
+use App\Models\UserTypeModel;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserModel>
  */
 class UserFactory extends Factory
 {
@@ -23,11 +23,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'cpf' => fake()->unique()->numerify('###########'),
             'password' => static::$password ??= Hash::make('password'),
-            'user_type_id' => $this->faker->randomElement(UserType::pluck('id')->toArray()),
+            'user_type_id' => $this->faker->randomElement(UserTypeModel::pluck('id')->toArray()),
         ];
     }
 }

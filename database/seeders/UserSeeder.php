@@ -5,19 +5,21 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\UserType;
-use App\Models\User;
+use App\Enum\UserTypeEnum;
+use App\Models\UserModel;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::factory(10)->create([
-            'user_type_id' => UserType::MERCHANT,
+        UserModel::factory(10)->create([
+            'user_type_id' => UserTypeEnum::MERCHANT,
+            'balance' => 1000,
         ]);
 
-        User::factory(10)->create([
-            'user_type_id' => UserType::COMMON,
+        UserModel::factory(10)->create([
+            'user_type_id' => UserTypeEnum::COMMON,
+            'balance' => 1000,
         ]);
     }
 }
