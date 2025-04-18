@@ -4,15 +4,15 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Requests\PaymentRequest;
 use App\Http\Controllers\Controller;
-use App\Business\PaymentBusiness;
+use App\Services\Payment\PaymentService;
 use App\Models\UserModel;    
 
 class PaymentController extends Controller
 {
-    protected PaymentBusiness $paymentBusiness;
+    protected PaymentService $paymentService;
 
-    public function __construct(paymentBusiness $paymentBusiness) {
-        $this->paymentBusiness = new paymentBusiness();
+    public function __construct(PaymentService $paymentService) {
+        $this->paymentService = $paymentService;
     }
 
     public function post(PaymentRequest $request) {
@@ -23,7 +23,7 @@ class PaymentController extends Controller
         $value = $validatedData['value'];
 
         try {
-            $this->paymentBusiness->transfer($payerId, $payeeId, $value);
+            $this->paymentService->createPayment($payerId, $payeeId, $value);
             return response()->json(['message' => 'Transaction successful'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
