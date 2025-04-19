@@ -19,11 +19,10 @@ class ExternalAuthorizationApiService implements PaymentAuthorizationServiceInte
     public function isPaymentAuthorized(): bool
     {
         try {
-            $response = Http::get($this->baseUrl . '/authorize');
-
+            $response = Http::get($this->baseUrl . 'authorize');
             if ($response->status() === 200) {
                 $returnedData = $response->json();
-                return $returnedData['authorized'] === "true";
+                return $returnedData["data"]["authorization"] === true;
             }
 
         } catch (Exception $e) {

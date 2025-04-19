@@ -66,7 +66,7 @@ class PaymentServiceValidator extends Validator
     }
 
     private function checkIfExternalAuthorizationServiceAllow()
-    {
+{
         if (!$this->paymentAuthorizationService->isPaymentAuthorized()) {
             throw new PaymentAuthorizationServiceFailedException();
         }
