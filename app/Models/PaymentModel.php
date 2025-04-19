@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PaymentModel extends Model
 {
@@ -21,14 +22,17 @@ class PaymentModel extends Model
         'value',
     ];
 
-    public function payer() {
-        return $this->belongsTo(UserModel::class, 'payer_id');
+    public function payer(): BelongsTo
+    {
+        return $this->belongsTo(related: UserModel::class, foreignKey: 'payer_id');
     }
 
-    public function payee() {
-        return $this->belongsTo(UserModel::class, 'payee_id');
+    public function payee(): BelongsTo
+    {
+        return $this->belongsTo(related: UserModel::class, foreignKey: 'payee_id');
     }
-    public function status() {
-        return $this->belongsTo(PaymentStatusModel::class, 'status');
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(related: PaymentStatusModel::class, foreignKey: 'status');
     }
 }

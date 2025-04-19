@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface NotificationServiceInterface
 {
-    public function notifyUsers();
+    public function notifyUsers(): void;
 }

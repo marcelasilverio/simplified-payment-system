@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WalletModel extends Model
 {
@@ -17,7 +18,8 @@ class WalletModel extends Model
         'balance'
     ];
 
-    public function user() {
-        return $this->belongsTo(UserTypeModel::class, 'user_id');
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(related: UserTypeModel::class, foreignKey: 'user_id');
     }
 }

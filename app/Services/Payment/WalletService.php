@@ -9,18 +9,19 @@ use App\Services\Service;
 
 class WalletService extends Service
 {
-    public function __construct(WalletRepository $repository) {
-        parent::__construct($repository, null);
+    public function __construct(WalletRepository $repository)
+    {
+        parent::__construct(repository: $repository, validator: null);
     }
 
     public function updateUsersWalletByPayment(PaymentModel $payment): void
     {
-        $this->repository->updateUsersWalletByPayment($payment);
+        $this->repository->updateUsersWalletByPayment(payment: $payment);
     }
 
     public function getUserBalance(UserModel $user): float
     {
-        $wallet = $this->repository->getWalletByUserId($user);
+        $wallet = $this->repository->getWalletByUserId(user: $user);
 
         return $wallet->balance ?? $user->initial_balance;
     }

@@ -3,6 +3,7 @@
 namespace App\Exceptions\Payment;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class PaymentNotAllowedForUserTypeException extends Exception
 {
@@ -15,10 +16,10 @@ class PaymentNotAllowedForUserTypeException extends Exception
         $this->code = self::CODE;
     }
 
-    public function render($request)
+    public function render(): JSONResponse
     {
-        return response()->json([
+        return response()->json(data: [
             'error' => $this->message,
-        ], $this->code);
+        ], status: $this->code);
     }
 }

@@ -9,34 +9,35 @@ use App\Models\UserModel;
 use App\Models\WalletModel;
 use App\Models\PaymentModel;
 
-class WalletRepository extends Repository 
+class WalletRepository extends Repository
 {
-    public function __construct(WalletModel $model) {
-        parent::__construct($model);
+    public function __construct(WalletModel $model)
+    {
+        parent::__construct(model: $model);
     }
 
     public function updateUsersWalletByPayment(PaymentModel $payment): void
     {
-        DB::transaction(function () use ($payment) {
-            $this->updateUserWallet($payment->payer);
-            $this->updateUserWallet($payment->payee);
+        DB::transaction(callback: function () use ($payment): void {
+            $this->updateUserWallet(user: $payment->payer);
+            $this->updateUserWallet(user: $payment->payee);
         });
     }
 
     public function getWalletByUserId(UserModel $user): ?WalletModel
     {
-        return $this->model::where('user_id', $user->id)->first();
+        return $this->model::where(column: 'user_id', operator: $user->id)->first();
     }
 
     private function updateUserWallet(UserModel $user): void
     {
-        $totalBalance = (PaymentModel::where('payee_id', $user->id)
-            ->sum('value') - PaymentModel::where('payer_id', $user->id)
-            ->sum('value')) + $user->initial_balance;
+        $totalBalance = (PaymentModel::where(column: 'payee_id', operator: $user->id)
+            ->sum(column: 'value') - PaymentModel::where(column: 'payer_id', operator: $user->id)
+                ->sum(column: 'value')) + $user->initial_balance;
 
         $this->model::updateOrCreate(
-            ['user_id' => $user->id],
-            ['balance' => $totalBalance]
+            attributes: ['user_id' => $user->id],
+            values: ['balance' => $totalBalance]
         );
     }
 }

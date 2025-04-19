@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UserTypeModel extends Model
 {
@@ -17,11 +18,13 @@ class UserTypeModel extends Model
     protected $table = self::TABLE;
     protected $primaryKey = self::ID;
 
-    public function users() {
-        return $this->hasMany(UserModel::class, 'user_type_id');
+    public function users(): HasMany
+    {
+        return $this->hasMany(related: UserModel::class, foreignKey: 'user_type_id');
     }
 
-    public function canUserTypeTransferMoney() {
+    public function canUserTypeTransferMoney(): bool
+    {
         return $this->is_allowed_to_transfer;
     }
 }

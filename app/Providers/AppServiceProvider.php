@@ -14,6 +14,8 @@ use App\Validators\Payment\PaymentServiceValidator;
 use App\Repositories\Payment\PaymentRepository;
 use App\Repositories\Payment\WalletRepository;
 use App\Services\Payment\WalletService;
+use App\Events\PaymentCreatedEvent;
+use App\Listeners\UpdateWalletsListener;
 use App\Models\PaymentModel;
 use App\Models\WalletModel;
 
@@ -21,47 +23,47 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->bind(NotificationServiceInterface::class, function ($app) {
+        $this->app->bind(abstract: NotificationServiceInterface::class, concrete: function ($app): mixed {
             return $app->make(ExternalNotificationApiService::class);
         });
 
-        $this->app->bind(PaymentAuthorizationServiceInterface::class, function ($app) {
+        $this->app->bind(abstract: PaymentAuthorizationServiceInterface::class, concrete: function ($app): mixed {
             return $app->make(ExternalAuthorizationApiService::class);
         });
-        
-        $this->app->singleton(PaymentServiceValidator::class, function ($app) {
+
+        $this->app->singleton(abstract: PaymentServiceValidator::class, concrete: function ($app): PaymentServiceValidator {
             return new PaymentServiceValidator(
-                $app->make(PaymentAuthorizationServiceInterface::class),
-                $app->make(WalletService::class)
+                paymentAuthorizationService: $app->make(PaymentAuthorizationServiceInterface::class),
+                walletService: $app->make(WalletService::class)
             );
         });
 
-        $this->app->singleton(PaymentRepository::class, function ($app) {
-            return new PaymentRepository($app->make(PaymentModel::class));
+        $this->app->singleton(abstract: PaymentRepository::class, concrete: function ($app): PaymentRepository {
+            return new PaymentRepository(model: $app->make(PaymentModel::class));
         });
 
-        $this->app->singleton(PaymentService::class, function ($app) {
+        $this->app->singleton(abstract: PaymentService::class, concrete: function ($app): PaymentService {
             return new PaymentService(
-                $app->make(PaymentServiceValidator::class),
-                $app->make(PaymentRepository::class),
-                $app->make(NotificationServiceInterface::class)
+                validator: $app->make(PaymentServiceValidator::class),
+                repository: $app->make(PaymentRepository::class),
+                notificationService: $app->make(NotificationServiceInterface::class)
             );
         });
 
-        $this->app->singleton(WalletRepository::class, function ($app) {
-            return new WalletRepository($app->make(WalletModel::class));
+        $this->app->singleton(abstract: WalletRepository::class, concrete: function ($app): WalletRepository {
+            return new WalletRepository(model: $app->make(WalletModel::class));
         });
 
-        $this->app->singleton(WalletService::class, function ($app) {
-            return new WalletService($app->make(WalletRepository::class));
+        $this->app->singleton(abstract: WalletService::class, concrete: function ($app): WalletService {
+            return new WalletService(repository: $app->make(WalletRepository::class));
         });
     }
 
     public function boot(): void
     {
         Event::listen(
-            PaymentCreatedEvent::class,
-            [UpdateWalletsListener::class, 'handle']
+            events: PaymentCreatedEvent::class,
+            listener: [UpdateWalletsListener::class, 'handle']
         );
     }
 }

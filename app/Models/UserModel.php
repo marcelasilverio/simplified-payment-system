@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserModel extends Authenticatable
 {
@@ -38,11 +39,13 @@ class UserModel extends Authenticatable
         ];
     }
 
-    public function type() {
-        return $this->belongsTo(UserTypeModel::class, 'user_type_id');
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(related: UserTypeModel::class, foreignKey: 'user_type_id');
     }
 
-    public function canTransferMoney () {
+    public function canTransferMoney(): bool
+    {
         return $this->type && $this->type->canUserTypeTransferMoney();
     }
 }

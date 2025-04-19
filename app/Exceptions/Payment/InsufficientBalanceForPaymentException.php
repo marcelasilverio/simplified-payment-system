@@ -3,6 +3,7 @@
 namespace App\Exceptions\Payment;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class InsufficientBalanceForPaymentException extends Exception
 {
@@ -15,10 +16,10 @@ class InsufficientBalanceForPaymentException extends Exception
         $this->code = self::CODE;
     }
 
-    public function render($request)
+    public function render(): JsonResponse
     {
-        return response()->json([
+        return response()->json(data: [
             'error' => $this->message,
-        ], $this->code);
+        ], status: $this->code);
     }
 }
