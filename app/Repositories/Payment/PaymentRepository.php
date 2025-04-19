@@ -12,7 +12,7 @@ class PaymentRepository extends Repository
         parent::__construct($model);
     }
 
-    public function createPayment(PaymentModel $payment): PaymentModel
+    public function createPayment(PaymentModel $payment): bool
     {
         return $payment->save();
     }
