@@ -1,66 +1,108 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema Simplificado de Pagamentos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Bem-vindo ao repositório do Sistema Simplificado de Pagamentos, uma API desenvolvida em Laravel que permite realizar transações financeiras entre usuários. Este projeto foi criado com foco em boas práticas de desenvolvimento, seguindo os princípios REST. Além disso, um container Docker foi criado para facilitar a configuração e execução.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Índice
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Arquitetura
+- Tecnologias Utilizadas
+- Pré-requisitos
+- Configuração
+- Roadmap
+- Licença
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Arquitetura
 
-## Learning Laravel
+O Sistema Simplificado de Pagamentos é uma API REST que permite criar pagamentos entre usuários.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+A aplicação foi projetada para ser executada dentro de um ambiente Docker, garantindo consistência e facilidade de uso em diferentes máquinas.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+# Tecnologias Utilizadas
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Este projeto utiliza as seguintes tecnologias:
 
-## Contributing
+Laravel: Framework PHP para desenvolvimento web.
+PHP 8.4 CLI (Alpine): Ambiente leve e seguro para execução da aplicação.
+SQLite: Banco de dados relacional baseado em arquivos.
+Docker: Para containerização da aplicação.
+Docker Compose: Para orquestração dos serviços.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+# Pré-requisitos
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Antes de começar, certifique-se de ter instalado:
 
-## Security Vulnerabilities
+Git: Para clonar o repositório.
+Docker: Versão 20.10 ou superior.
+Docker Compose: Versão 2.x ou superior.
+WSL 2 (se estiver usando Windows): Para executar containers Linux.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Configuração
 
-## License
+Siga os passos abaixo para configurar o projeto (pensado para um ambiente Linux):
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Clone o Repositório
+git clone https://github.com/seu-usuario/simplified-payment-system.git
+
+2. Navegue até o Diretório do Projeto
+cd simplified-payment-system
+
+3. Rode os comandos abaixo para a configuração do continer
+
+```bash
+  cd ~/simplified-payment-system
+  chmod +x setup.sh
+  ./setup.sh
+```
+
+3. Para iniciar a aplicação: 
+
+```bash
+  docker compose up
+```
+
+É possível acessar a API pela rota http://0.0.0.0:8000.
+
+# Estrutura do Projeto
+
+A estrutura do projeto está organizada da seguinte forma:
+
+simplified-payment-system/
+├── Dockerfile                # Configuração do ambiente Docker
+├── docker-compose.yml        # Orquestração dos serviços Docker
+├── container/
+│   ├── api/                  # Código-fonte da aplicação Laravel
+│   │   ├── app/              # Código principal da aplicação
+│   │   ├── bootstrap/        # Arquivos de inicialização
+│   │   ├── config/           # Configurações da aplicação
+│   │   ├── database/         # Arquivos de migração e seeders
+│   │   │   ├── database.sqlite # Banco de dados SQLite
+│   │   ├── public/           # Arquivos públicos (index.php)
+│   │   ├── routes/           # Rotas da aplicação
+│   │   ├── storage/          # Arquivos gerados pela aplicação
+│   │   ├── tests/            # Testes automatizados
+│   │   ├── .env              # Variáveis de ambiente
+│   │   ├── artisan           # Comando Artisan
+│   │   ├── composer.json     # Dependências PHP
+│   │   ├── composer.lock     # Versões travadas das dependências
+│   │   └── server.php        # Servidor de desenvolvimento
+
+
+# Licença
+
+Este projeto está licenciado sob a MIT License. Você pode usar, modificar e distribuir este código conforme necessário.
+
+---
+
+# Contato
+
+Caso tenha dúvidas ou sugestões, entre em contato:
+
+Nome: Marcela Prata Silvério
+Email: marcelapsilverio@gmail.com
+GitHub: https://github.com/marcelasilverio
