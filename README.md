@@ -2,25 +2,26 @@
 
 Bem-vindo ao repositório do Sistema Simplificado de Pagamentos, uma API desenvolvida em Laravel que permite realizar transações financeiras entre usuários. Este projeto foi criado com foco em boas práticas de desenvolvimento, seguindo os princípios REST. Além disso, um container Docker foi criado para facilitar a configuração e execução.
 
-
 # Índice
 
 - Arquitetura
+- Roadmap
 - Tecnologias Utilizadas
 - Pré-requisitos
 - Configuração
-- Roadmap
 - Licença
 
 # Arquitetura
 
-O Sistema Simplificado de Pagamentos é uma API REST que permite criar pagamentos entre usuários.
+O Sistema Simplificado de Pagamentos é uma API REST que permite criar pagamentos entre usuários. Ele foi projetado para ser executada dentro de um ambiente Docker, garantindo consistência e facilidade de uso em diferentes máquinas.
 
+Como padrão arquitetural, foi implementado de forma simplista o padrão CQRS juntamente com o Event Sourcing. Assim, ao fazermos um transferência com o endpoint /transfer (POST), estamos criando um recurso (Payment) no banco de escrita. A leitura e compilado dessa informações ocorre por meio da tabela Wallet, que apresenta o saldo final do usuário com base em todos os pagamentos anteriores. 
 
+Para a atualização da carteira, foi utilizadas clases de Events e Listeners, que fazem a atualização posterior dos saldos para posterior leitura.
 
-A aplicação foi projetada para ser executada dentro de um ambiente Docker, garantindo consistência e facilidade de uso em diferentes máquinas.
+# Roadmap
 
-
+O sistema ainda é bem simples, faltando diversos recursos a serem implementados, como: sistema de monitoramento de logs organizado, testes unitários, sistema de autenticação. Outro ponto, é que esse repositório foi pensado para ser executado em um ambiente de desenvolvimento, não sendo adequado para publicação em produção. Ainda é necessário a configuração de pipelines e variáveis de ambientes adequadas guardadas em um cofre adequado.
 
 # Tecnologias Utilizadas
 
@@ -31,7 +32,6 @@ PHP 8.4 CLI (Alpine): Ambiente leve e seguro para execução da aplicação.
 SQLite: Banco de dados relacional baseado em arquivos.
 Docker: Para containerização da aplicação.
 Docker Compose: Para orquestração dos serviços.
-
 
 # Pré-requisitos
 
@@ -71,7 +71,7 @@ cd simplified-payment-system
 # Estrutura do Projeto
 
 A estrutura do projeto está organizada da seguinte forma:
-
+```
 simplified-payment-system/
 ├── Dockerfile                # Configuração do ambiente Docker
 ├── docker-compose.yml        # Orquestração dos serviços Docker
@@ -91,13 +91,12 @@ simplified-payment-system/
 │   │   ├── composer.json     # Dependências PHP
 │   │   ├── composer.lock     # Versões travadas das dependências
 │   │   └── server.php        # Servidor de desenvolvimento
-
+```
 
 # Licença
 
 Este projeto está licenciado sob a MIT License. Você pode usar, modificar e distribuir este código conforme necessário.
 
----
 
 # Contato
 
