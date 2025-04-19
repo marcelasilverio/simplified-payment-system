@@ -28,9 +28,9 @@ class PaymentServiceValidator extends Validator
     }
 
 
-    public function validateCreation(Model $payment): void
+    public function validateCreation(Model $data): void
     {
-        $this->setPayment(payment: $payment);
+        $this->setPayment(payment: $data);
 
         $this->checkIfUserAllowedToTransferMoney(user: $this->payment->payer);
         $this->checkIfPayerBalanceIsSufficientForTransaction(payer: $this->payment->payer, value: $this->payment->value);
