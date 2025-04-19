@@ -27,7 +27,8 @@ class PaymentService extends Service
         parent::__construct($repository, $validator);
     }
     
-    public function createPayment(int $payerId, int $payeeId, float $value) {
+    public function createPayment(int $payerId, int $payeeId, float $value): PaymentModel
+    {
         $payer = UserModel::find($payerId);
         $payee = UserModel::find($payeeId);
         $payment = new PaymentModel([
@@ -42,6 +43,10 @@ class PaymentService extends Service
         $this->repository->createPayment($payment);
         $this->notificationService->notifyUsers();
 
-        PaymentCreatedEvent::dispatch($payment);
+        $paymentCreated = $this->repository->getPaymentById($payment->id);
+
+        PaymentCreatedEvent::dispatch($paymentCreated);
+
+        return $paymentCreated;
     }
 }

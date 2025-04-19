@@ -21,10 +21,10 @@ class PaymentController extends Controller
         $value = $validatedData['value'];
 
         try {
-            $this->service->createPayment($payerId, $payeeId, $value);
-            return response()->json(['message' => 'Transaction successful'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            $paymentCreated = $this->service->createPayment($payerId, $payeeId, $value);
+            return response()->json($paymentCreated, 201);
+        } catch (\Exception $error) {
+            return response()->json(['error' => $error->getMessage()], 400);
         }
         
     }
