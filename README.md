@@ -21,26 +21,26 @@ Para a atualização da carteira, foi utilizado um sistema de eventos, que faz a
 
 # Roadmap
 
-O sistema ainda é bem simples, faltando diversos recursos a serem implementados, como: sistema de monitoramento de logs organizado, testes unitários (deveriam ter sido realizados antes da implementação, pensando em TDD), sistema de autenticação. Outro ponto, é que esse repositório foi pensado para ser executado em um ambiente de desenvolvimento, não sendo adequado para publicação em produção. Ainda é necessário a configuração de pipelines e variáveis de ambientes adequadas guardadas em um cofre.
+O sistema ainda é bem simples, faltando diversos recursos a serem implementados, como um sistema de monitoramento de logs organizado, testes unitários (deveriam ter sido realizados antes da implementação da lógica como forma de documentação e verificação do foi desenvolvido), sistema de autenticação, entre outros . Outro ponto a se ressaltar é: esse repositório foi pensado para ser executado em um ambiente de desenvolvimento, não sendo adequado para publicação em produção. Ainda é necessário a configuração de pipelines e variáveis de ambientes adequadas guardadas em um cofre seguro.
 
 # Tecnologias Utilizadas
 
 Este projeto utiliza as seguintes tecnologias:
 
-Laravel: Framework PHP para desenvolvimento web.
-PHP 8.4 CLI (Alpine): Ambiente leve e seguro para execução da aplicação.
-SQLite: Banco de dados relacional baseado em arquivos.
-Docker: Para containerização da aplicação.
-Docker Compose: Para orquestração dos serviços.
+- Laravel: Framework PHP para desenvolvimento web.
+- PHP 8.4 CLI (Alpine): Ambiente leve e seguro para execução da aplicação.
+- SQLite: Banco de dados relacional baseado em arquivos.
+- Docker: Para containerização da aplicação.
+- Docker Compose: Para orquestração dos serviços.
 
 # Pré-requisitos
 
 Antes de começar, certifique-se de ter instalado:
 
-Git: Para clonar o repositório.
-Docker: Versão 20.10 ou superior.
-Docker Compose: Versão 2.x ou superior.
-WSL 2 (se estiver usando Windows): Para executar containers Linux.
+- Git: Para clonar o repositório.
+- Docker: Versão 20.10 ou superior.
+- Docker Compose: Versão 2.x ou superior.
+- WSL 2 (se estiver usando Windows): Para executar containers Linux.
 
 # Configuração
 
