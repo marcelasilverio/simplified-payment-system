@@ -15,7 +15,7 @@ class WalletService extends Service
 
     public function updateUsersWalletByPayment(PaymentModel $payment): void
     {
-        $this->repository->updateWalletByPayment($payment);
+        $this->repository->updateUsersWalletByPayment($payment);
     }
 
     public function getUserBalance(UserModel $user): float

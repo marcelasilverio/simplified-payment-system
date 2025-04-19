@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Payment;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Repositories\Repository;
 use App\Models\UserModel;
 use App\Models\WalletModel;

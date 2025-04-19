@@ -12,6 +12,11 @@ class WalletModel extends Model
     protected $table = self::TABLE;
     protected $primaryKey = self::ID;
 
+    protected $fillable = [
+        'user_id',
+        'balance'
+    ];
+
     public function user() {
         return $this->belongsTo(UserTypeModel::class, 'user_id');
     }
