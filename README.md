@@ -13,15 +13,15 @@ Bem-vindo ao repositório do Sistema Simplificado de Pagamentos, uma API desenvo
 
 # Arquitetura
 
-O Sistema Simplificado de Pagamentos é uma API REST que permite criar pagamentos entre usuários. Ele foi projetado para ser executada dentro de um ambiente Docker, garantindo consistência e facilidade de uso em diferentes máquinas.
+O Sistema Simplificado de Pagamentos é uma API REST que permite criar pagamentos entre usuários. Ele foi projetado para ser executado dentro de um ambiente Docker, garantindo consistência e facilidade de uso em diferentes máquinas.
 
-Como padrão arquitetural, foi implementado de forma simplista o padrão CQRS juntamente com o Event Sourcing. Assim, ao fazermos um transferência com o endpoint /transfer (POST), estamos criando um recurso (Payment) no banco de escrita. A leitura e compilado dessa informações ocorre por meio da tabela Wallet, que apresenta o saldo final do usuário com base em todos os pagamentos anteriores. 
+Como padrão arquitetural, foi implementado de forma simplista o padrão CQRS, juntamente com o Event Sourcing. Assim, ao fazermos um transferência com o endpoint /transfer (POST), estamos criando um recurso (Payment) no banco de escrita. A leitura e compilação dos eventos ocorre na tabela Wallet, que apresenta o saldo final do usuário com base em todos os pagamentos anteriores. 
 
-Para a atualização da carteira, foi utilizadas clases de Events e Listeners, que fazem a atualização posterior dos saldos para posterior leitura.
+Para a atualização da carteira, foi utilizado um sistema de eventos, que faz a atualização dos saldos para leitura.
 
 # Roadmap
 
-O sistema ainda é bem simples, faltando diversos recursos a serem implementados, como: sistema de monitoramento de logs organizado, testes unitários, sistema de autenticação. Outro ponto, é que esse repositório foi pensado para ser executado em um ambiente de desenvolvimento, não sendo adequado para publicação em produção. Ainda é necessário a configuração de pipelines e variáveis de ambientes adequadas guardadas em um cofre adequado.
+O sistema ainda é bem simples, faltando diversos recursos a serem implementados, como: sistema de monitoramento de logs organizado, testes unitários (deveriam ter sido realizados antes da implementação, pensando em TDD), sistema de autenticação. Outro ponto, é que esse repositório foi pensado para ser executado em um ambiente de desenvolvimento, não sendo adequado para publicação em produção. Ainda é necessário a configuração de pipelines e variáveis de ambientes adequadas guardadas em um cofre.
 
 # Tecnologias Utilizadas
 
@@ -46,13 +46,14 @@ WSL 2 (se estiver usando Windows): Para executar containers Linux.
 
 Siga os passos abaixo para configurar o projeto (pensado para um ambiente Linux):
 
-1. Clone o Repositório
-git clone https://github.com/seu-usuario/simplified-payment-system.git
 
-2. Navegue até o Diretório do Projeto
+1. Clone o repositório no diretório raiz e navegue até o projeto
+
+```bash
 cd simplified-payment-system
+```
 
-3. Rode os comandos abaixo para a configuração do continer
+2. Rode os comandos abaixo para a configuração do continer
 
 ```bash
   cd ~/simplified-payment-system
@@ -66,7 +67,7 @@ cd simplified-payment-system
   docker compose up
 ```
 
-É possível acessar a API pela rota http://0.0.0.0:8000.
+É possível acessar a API pela rota http://0.0.0.0:8000. Para facilitar o uso, uma coleção postman foi criada e disponibilizada na raiz do repositório.
 
 # Estrutura do Projeto
 
