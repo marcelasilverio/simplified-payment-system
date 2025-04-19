@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+api:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  ports:
+    - "8000:8000"
+  volumes:
+    - ./container/api:/var/www/html 
+    - ./container/api/database:/var/www/html/database
+  environment:
+    APP_ENV: local
+    APP_DEBUG: true

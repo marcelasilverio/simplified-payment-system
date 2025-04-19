@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "669d7805-efb7-4517-bb0f-0320547890fd",
+		"name": "Simplified Payment System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19964937"
+	},
+	"item": [
+		{
+			"name": "Transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5173/api/v1/transfer",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"v1",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
